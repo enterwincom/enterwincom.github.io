@@ -1,0 +1,5 @@
+title: My GitHub Blog
+description: 개발 기록 블로그
+theme: minima
+
+markdown: kramdown
