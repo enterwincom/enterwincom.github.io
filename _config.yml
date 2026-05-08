@@ -1,6 +1,6 @@
 # _config.yml 내용
-title: "ENTERWIN Dev Log"
-description: "개발자 블로그입니다"
+title: "Dev Log"
+description: "ENTERWIN의 블로그입니다"
 baseurl: ""
 url: ""
 theme: minima
