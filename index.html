@@ -4,18 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ENTERWIN</title>
-
   <link rel="stylesheet" href="style.css" />
-
   <!-- Markdown parser -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
 <body class="app">
 
-  <!-- TOP BAR (VS Code 느낌) -->
+  <!-- TOP BAR -->
   <header class="topbar">
     <div class="brand">
+      <!-- 모바일용 사이드바 토글 버튼 추가 -->
+      <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
       <span class="dot red"></span>
       <span class="dot yellow"></span>
       <span class="dot green"></span>
@@ -29,32 +29,45 @@
 
   <!-- MAIN LAYOUT -->
   <main class="layout">
+    <!-- 모바일에서 사이드바 열릴 때 배경 어둡게 처리 -->
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
 
-    <!-- SIDEBAR (Explorer 느낌) -->
-    <aside class="sidebar">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
       <div class="sidebar-title">📁 POSTS</div>
       <ul id="postList" class="file-tree"></ul>
     </aside>
 
-    <!-- CONTENT (Editor 느낌) -->
+    <!-- CONTENT -->
     <section id="content" class="editor">
-
       <div class="editor-header">
-        <span class="file-name">hello.md</span>
+        <span class="file-name" id="currentFileName">hello.md</span>
       </div>
 
-      <div class="editor-body">
+      <div class="editor-body" id="postContent">
         <h1>Welcome 👋</h1>
         <p>왼쪽에서 글을 선택하면 내용이 표시됩니다.</p>
-        <pre>
-# 블로그 방문을 환영합니다.
-        </pre>
+        <pre># 블로그 방문을 환영합니다.</pre>
       </div>
-
     </section>
-
   </main>
 
   <script src="app.js"></script>
+  <script>
+    // 모바일 사이드바 토글 함수
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.querySelector('.sidebar-overlay');
+      sidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    }
+
+    // 포스트 클릭 시 모바일에서는 사이드바를 자동으로 닫아주는 로직 추가 (선택 사항)
+    document.getElementById('postList').addEventListener('click', function() {
+      if (window.innerWidth <= 768) {
+        toggleSidebar();
+      }
+    });
+  </script>
 </body>
 </html>
