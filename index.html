@@ -1,65 +1,31 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ENTERWIN</title>
-  <link rel="stylesheet" href="style.css" />
-  <!-- Markdown parser -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site.title }}</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="app">
+<body>
+    <header>
+        <h1><a href="/">{{ site.title }}</a></h1>
+        <p>{{ site.description }}</p>
+    </header>
 
-  <header class="topbar">
-    <div class="brand">
-      <!-- 모바일 전용 토글 버튼 -->
-      <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-      <div class="dots-group">
-        <span class="dot red"></span>
-        <span class="dot yellow"></span>
-        <span class="dot green"></span>
-      </div>
-      <span class="title">ENTERWIN dev-blog</span>
-    </div>
-    <div class="actions">
-      <button onclick="toggleTheme()" class="theme-btn">🌙 / ☀️</button>
-    </div>
-  </header>
+    <main>
+        <h2>Recent Posts</h2>
+        <ul>
+            {% for post in site.posts %}
+            <li>
+                <span class="date">{{ post.date | date: "%Y-%m-%d" }}</span>
+                <a href="{{ post.url }}">{{ post.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </main>
 
-  <main class="layout">
-    <!-- 모바일 사이드바 배경 오버레이 -->
-    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
-
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-title">📁 POSTS</div>
-      <ul id="postList" class="file-tree"></ul>
-    </aside>
-
-    <section id="content" class="editor">
-      <div class="editor-header">
-        <span class="file-name">hello.md</span>
-      </div>
-      <div class="editor-body">
-        <h1>Welcome 👋</h1>
-        <p>post 글을 선택하면 내용이 표시됩니다.</p>
-        <pre># 블로그 방문을 환영합니다.</pre>
-      </div>
-    </section>
-  </main>
-
-  <script src="app.js"></script>
-  <script>
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const overlay = document.querySelector('.sidebar-overlay');
-      sidebar.classList.toggle('active');
-      overlay.classList.toggle('active');
-    }
-    
-    // 다크모드 예시 함수 (필요시 수정)
-    function toggleTheme() {
-      document.body.classList.toggle('light');
-    }
-  </script>
+    <footer>
+        <p>&copy; {{ site.time | date: "%Y" }} Built with GitHub Pages</p>
+    </footer>
 </body>
 </html>
