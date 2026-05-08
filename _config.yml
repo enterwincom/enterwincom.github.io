@@ -1,0 +1,9 @@
+title: ENTERWIN Dev Log
+description: 심플한 개발 블로그입니다.
+baseurl: "" 
+url: "https://enterwincom.github.io"
+
+# 빌드 설정
+theme: minima
+plugins:
+  - jekyll-feed
