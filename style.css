@@ -1,10 +1,15 @@
+/* 전역 설정: 화면 잘림 방지의 핵심 */
+* {
+  box-sizing: border-box;
+}
+
 :root {
   --bg: #0f172a;
   --card: #111827;
   --text: #e5e7eb;
   --muted: #94a3b8;
   --border: #1f2937;
-  --sidebar-width: 250px; /* 변수로 관리하면 편리합니다 */
+  --sidebar-w: 250px;
 }
 
 body.light {
@@ -17,69 +22,68 @@ body.light {
 
 body {
   margin: 0;
-  font-family: system-ui;
+  font-family: system-ui, -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
-  overflow-x: hidden; /* 모바일 가로 스크롤 방지 */
+  overflow-x: hidden; /* 가로 스크롤 완전 차단 */
 }
 
+/* Header */
 header {
-  padding: 1rem 1.5rem;
+  height: 60px;
+  padding: 0 1.5rem;
   border-bottom: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 60px; /* 높이 고정 */
-  box-sizing: border-box;
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-/* 햄버거 버튼 스타일 (기본은 숨김) */
-.menu-toggle {
-  display: none;
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  color: var(--text);
-  padding: 0;
-  margin-right: 1rem;
-}
+.brand { display: flex; align-items: center; gap: 10px; }
+.dots-group { display: flex; gap: 6px; }
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.red { background: #ff5f56; }
+.yellow { background: #ffbd2e; }
+.green { background: #27c93f; }
 
-main {
-  display: grid;
-  grid-template-columns: var(--sidebar-width) 1fr;
+/* Layout */
+.layout {
+  display: flex; /* grid 대신 flex가 반응형 조절에 유리합니다 */
   height: calc(100vh - 60px);
 }
 
+/* Sidebar */
 aside {
+  width: var(--sidebar-w);
   border-right: 1px solid var(--border);
   padding: 1rem;
   background: var(--bg);
   overflow-y: auto;
+  flex-shrink: 0;
 }
 
-#postList {
-  padding: 0;
-  margin: 0;
-}
-
+#postList { padding: 0; margin: 0; }
 #postList li {
   cursor: pointer;
-  padding: 0.7rem 0.5rem; /* 터치하기 쉽게 패딩 증대 */
+  padding: 8px 12px;
   list-style: none;
   color: var(--muted);
   border-radius: 4px;
-  transition: 0.2s;
 }
+#postList li:hover { background: var(--card); color: var(--text); }
 
-#postList li:hover {
-  background: var(--card);
-  color: var(--text);
-}
-
+/* Content Area */
 #content {
+  flex-grow: 1;
   padding: 2rem;
   overflow-y: auto;
+  min-width: 0; /* flex 아이템의 너비 오버플로 방지 */
 }
+
+.editor-header { border-bottom: 1px solid var(--border); padding-bottom: 1rem; margin-bottom: 1rem; color: var(--muted); }
 
 button {
   background: var(--card);
@@ -87,44 +91,68 @@ button {
   color: var(--text);
   padding: 0.5rem 1rem;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 
 /* =============================================
-   📱 모바일 대응 (화면 너비 768px 이하)
+   📱 모바일 대응 (768px 이하)
    ============================================= */
 @media (max-width: 768px) {
   .menu-toggle {
-    display: block; /* 햄버거 버튼 보임 */
+    display: block;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
   }
 
-  main {
-    grid-template-columns: 1fr; /* 사이드바 자리를 없앰 */
-  }
+  .dots-group { display: none; } /* 모바일에선 점들 숨김 */
 
   aside {
     position: fixed;
-    left: calc(-1 * var(--sidebar-width)); /* 왼쪽으로 숨김 */
+    left: calc(var(--sidebar-w) * -1); /* 왼쪽 밖으로 숨김 */
     top: 60px;
     bottom: 0;
-    width: var(--sidebar-width);
     z-index: 1000;
     transition: transform 0.3s ease;
-    box-shadow: 10px 0 15px rgba(0,0,0,0.1);
+    box-shadow: 5px 0 15px rgba(0,0,0,0.3);
   }
 
-  /* 사이드바가 열렸을 때 */
   aside.active {
-    transform: translateX(var(--sidebar-width));
+    transform: translateX(var(--sidebar-w));
   }
+
+  /* 사이드바 열릴 때 배경 */
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 999;
+  }
+  .sidebar-overlay.active { display: block; }
 
   #content {
-    padding: 1.5rem; /* 여백 살짝 축소 */
+    padding: 1.5rem;
   }
 
-  /* 모바일에서 코드 블록 등이 삐져나가지 않게 처리 */
   pre {
-    white-space: pre-wrap;
+    background: var(--card);
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    white-space: pre-wrap; /* 긴 코드 줄바꿈 */
     word-break: break-all;
   }
+}
+
+/* PC에서만 토글 버튼 숨김 */
+@media (min-width: 769px) {
+  .menu-toggle { display: none; }
+  .sidebar-overlay { display: none; }
 }
