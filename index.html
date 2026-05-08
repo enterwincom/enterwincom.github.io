@@ -8,43 +8,38 @@
   <!-- Markdown parser -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
-
 <body class="app">
 
-  <!-- TOP BAR -->
   <header class="topbar">
     <div class="brand">
-      <!-- 모바일용 사이드바 토글 버튼 추가 -->
+      <!-- 모바일 전용 토글 버튼 -->
       <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-      <span class="dot red"></span>
-      <span class="dot yellow"></span>
-      <span class="dot green"></span>
+      <div class="dots-group">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+      </div>
       <span class="title">ENTERWIN dev-blog</span>
     </div>
-
     <div class="actions">
-      <button onclick="toggleTheme()">🌙 / ☀️</button>
+      <button onclick="toggleTheme()" class="theme-btn">🌙 / ☀️</button>
     </div>
   </header>
 
-  <!-- MAIN LAYOUT -->
   <main class="layout">
-    <!-- 모바일에서 사이드바 열릴 때 배경 어둡게 처리 -->
+    <!-- 모바일 사이드바 배경 오버레이 -->
     <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
 
-    <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-title">📁 POSTS</div>
       <ul id="postList" class="file-tree"></ul>
     </aside>
 
-    <!-- CONTENT -->
     <section id="content" class="editor">
       <div class="editor-header">
-        <span class="file-name" id="currentFileName">hello.md</span>
+        <span class="file-name">hello.md</span>
       </div>
-
-      <div class="editor-body" id="postContent">
+      <div class="editor-body">
         <h1>Welcome 👋</h1>
         <p>왼쪽에서 글을 선택하면 내용이 표시됩니다.</p>
         <pre># 블로그 방문을 환영합니다.</pre>
@@ -54,20 +49,17 @@
 
   <script src="app.js"></script>
   <script>
-    // 모바일 사이드바 토글 함수
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       const overlay = document.querySelector('.sidebar-overlay');
       sidebar.classList.toggle('active');
       overlay.classList.toggle('active');
     }
-
-    // 포스트 클릭 시 모바일에서는 사이드바를 자동으로 닫아주는 로직 추가 (선택 사항)
-    document.getElementById('postList').addEventListener('click', function() {
-      if (window.innerWidth <= 768) {
-        toggleSidebar();
-      }
-    });
+    
+    // 다크모드 예시 함수 (필요시 수정)
+    function toggleTheme() {
+      document.body.classList.toggle('light');
+    }
   </script>
 </body>
 </html>
