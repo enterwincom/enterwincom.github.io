@@ -4,6 +4,7 @@
   --text: #e5e7eb;
   --muted: #94a3b8;
   --border: #1f2937;
+  --sidebar-width: 250px; /* 변수로 관리하면 편리합니다 */
 }
 
 body.light {
@@ -19,34 +20,59 @@ body {
   font-family: system-ui;
   background: var(--bg);
   color: var(--text);
+  overflow-x: hidden; /* 모바일 가로 스크롤 방지 */
 }
 
 header {
-  padding: 1.5rem;
+  padding: 1rem 1.5rem;
   border-bottom: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  height: 60px; /* 높이 고정 */
+  box-sizing: border-box;
+}
+
+/* 햄버거 버튼 스타일 (기본은 숨김) */
+.menu-toggle {
+  display: none;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--text);
+  padding: 0;
+  margin-right: 1rem;
 }
 
 main {
   display: grid;
-  grid-template-columns: 250px 1fr;
-  height: calc(100vh - 80px);
+  grid-template-columns: var(--sidebar-width) 1fr;
+  height: calc(100vh - 60px);
 }
 
 aside {
   border-right: 1px solid var(--border);
   padding: 1rem;
+  background: var(--bg);
+  overflow-y: auto;
+}
+
+#postList {
+  padding: 0;
+  margin: 0;
 }
 
 #postList li {
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.7rem 0.5rem; /* 터치하기 쉽게 패딩 증대 */
   list-style: none;
   color: var(--muted);
+  border-radius: 4px;
+  transition: 0.2s;
 }
 
 #postList li:hover {
+  background: var(--card);
   color: var(--text);
 }
 
@@ -61,4 +87,44 @@ button {
   color: var(--text);
   padding: 0.5rem 1rem;
   cursor: pointer;
+  border-radius: 6px;
+}
+
+/* =============================================
+   📱 모바일 대응 (화면 너비 768px 이하)
+   ============================================= */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block; /* 햄버거 버튼 보임 */
+  }
+
+  main {
+    grid-template-columns: 1fr; /* 사이드바 자리를 없앰 */
+  }
+
+  aside {
+    position: fixed;
+    left: calc(-1 * var(--sidebar-width)); /* 왼쪽으로 숨김 */
+    top: 60px;
+    bottom: 0;
+    width: var(--sidebar-width);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    box-shadow: 10px 0 15px rgba(0,0,0,0.1);
+  }
+
+  /* 사이드바가 열렸을 때 */
+  aside.active {
+    transform: translateX(var(--sidebar-width));
+  }
+
+  #content {
+    padding: 1.5rem; /* 여백 살짝 축소 */
+  }
+
+  /* 모바일에서 코드 블록 등이 삐져나가지 않게 처리 */
+  pre {
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
 }
