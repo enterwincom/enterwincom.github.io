@@ -11,28 +11,15 @@ categories: \[Project, Web]
 tags: \[Luckydraw, WebApp, OpenSource, Tool]
 
 \---
-
-
-
 \## 🎰 행운권 추첨기 (Lucky Draw)
-
-
 
 이벤트나 모임에서 공정하고 간편하게 사용할 수 있는 \*\*웹 기반 행운권 추첨기\*\*를 소개합니다. 별도의 설치 없이 브라우저에서 바로 실행 가능하며, 추첨 결과 관리까지 지원합니다.
 
-
-
 \---
-
-
 
 \### 🚀 주요 기능 및 사용 방법
 
-
-
 이 앱은 직관적인 UI를 통해 누구나 쉽게 번호를 추첨할 수 있도록 설계되었습니다.
-
-
 
 1\.  \*\*번호 범위 설정\*\*: 추첨할 대상의 시작 번호와 끝 번호를 입력합니다.
 
@@ -42,27 +29,15 @@ tags: \[Luckydraw, WebApp, OpenSource, Tool]
 
 4\.  \*\*데이터 저장\*\*: 당첨 히스토리는 \*\*CSV 파일\*\*로 다운로드하여 엑셀 등에서 관리할 수 있습니다.
 
-
-
 \### 🔗 바로가기
-
-
 
 아래 링크를 클릭하면 지금 바로 추첨기를 사용해 보실 수 있습니다.
 
-
-
 > \[\*\*행운권 추첨기 실행하기\*\*](https://enterwincom.github.io/luckydraw/)
-
-
 
 \---
 
-
-
 \### 🛠 기술 스택 및 특징
-
-
 
 \*   \*\*Platform\*\*: GitHub Pages (Static Web Hosting)
 
@@ -71,18 +46,5 @@ tags: \[Luckydraw, WebApp, OpenSource, Tool]
 \*   \*\*Export\*\*: 당첨 결과의 CSV 내보내기 기능 지원
 
 
-
-\### 📸 미리보기
-
-\*(여기에 실제 앱 구동 화면 캡처 이미지를 넣으시면 더 좋습니다)\*
-
-<!-- !\[Lucky Draw Preview](path/to/your/image.png) -->
-
-
-
 \---
-
-
-
-\*\*문의사항이나 피드백\*\*이 있다면 댓글로 남겨주세요!
 
