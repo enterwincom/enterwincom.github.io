@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "행운권 추첨기 Web App: 간편한 번호 추첨 서비스 소개"
+title: "행운권 추첨기 (Lucky Draw): 간편한 번호 추첨 서비스 소개"
 date: 2026-05-11 10:00:00 +0900
 categories: [Project, Web]
 tags: [Luckydraw, WebApp, OpenSource, Tool]
