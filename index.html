@@ -4,31 +4,167 @@ layout: default
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ site.title }}</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site.title }}</title>
+    <style>
+        /* 1. 테마 변수 설정 */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --header-bg: #f8f9fa;
+            --link-color: #007bff;
+            --border-color: #eeeeee;
+        }
+
+        /* 다크모드 변수 */
+        [data-theme='dark'] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --header-bg: #1e1e1e;
+            --link-color: #82aaff;
+            --border-color: #333333;
+        }
+
+        /* 2. 기본 스타일 적용 */
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        header h1 a {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .date {
+            font-size: 0.9rem;
+            color: #888;
+            margin-right: 1rem;
+        }
+
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* 3. 다크모드 토글 버튼 스타일 */
+        .theme-toggle-wrapper {
+            margin-top: 1rem;
+        }
+
+        #theme-toggle {
+            background: none;
+            border: 1px solid var(--text-color);
+            color: var(--text-color);
+            padding: 5px 15px;
+            cursor: pointer;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        #theme-toggle:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.8rem;
+            color: #888;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1><a href="/">{{ site.title }}</a></h1>
-        <p>{{ site.description }}</p>
-    </header>
+    <header>
+        <h1><a href="/">{{ site.title }}</a></h1>
+        <p>{{ site.description }}</p>
+        <div class="theme-toggle-wrapper">
+            <button id="theme-toggle" aria-label="다크모드 전환">모드 변경</button>
+        </div>
+    </header>
 
-    <main>
-        <h2>Recent Posts</h2>
-        <ul>
-            {% for post in site.posts %}
-            <li>
-                <span class="date">{{ post.date | date: "%Y-%m-%d" }}</span>
-                <a href="{{ post.url }}">{{ post.title }}</a>
-            </li>
-            {% endfor %}
-        </ul>
-    </main>
+    <main>
+        <h2>Recent Posts</h2>
+        <ul>
+            {% for post in site.posts %}
+            <li>
+                <span class="date">{{ post.date | date: "%Y-%m-%d" }}</span>
+                <a href="{{ post.url }}">{{ post.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </main>
 
-    <footer>
-        <p>&copy; {{ site.time | date: "%Y" }} Built with GitHub Pages</p>
-    </footer>
+    <footer>
+        <p>&copy; {{ site.time | date: "%Y" }} Built with GitHub Pages</p>
+    </footer>
+
+    <!-- 4. 다크모드 로직 스크립트 -->
+    <script>
+        const toggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+        
+        // 초기 로드 시: 저장된 테마가 있으면 적용, 없으면 시스템 설정 확인
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme) {
+            htmlElement.setAttribute('data-theme', savedTheme);
+            updateButtonText(savedTheme);
+        } else if (systemPrefersDark) {
+            htmlElement.setAttribute('data-theme', 'dark');
+            updateButtonText('dark');
+        }
+
+        // 클릭 이벤트
+        toggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateButtonText(newTheme);
+        });
+
+        function updateButtonText(theme) {
+            toggleBtn.textContent = theme === 'dark' ? '☀️ 라이트 모드' : '🌙 다크 모드';
+        }
+    </script>
 </body>
 </html>
