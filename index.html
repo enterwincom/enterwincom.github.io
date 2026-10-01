@@ -1,60 +1,98 @@
----
-layout: default
----
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ site.title }}</title>
-    <link rel="stylesheet" href="style.css"> </head>
-<body>
-    <header>
-        <button id="theme-toggle" aria-label="Toggle Dark Mode">🌙 Dark Mode</button>
-        <h1><a href="/">{{ site.title }}</a></h1>
+<!-- 다크모드 버튼 -->
+<div class="theme-button">
+    <button id="theme-toggle" type="button">
+        🌙 다크모드
+    </button>
+</div>
+
+
+<!-- 사이트 제목 -->
+<section class="hero">
+
+    <h1>{{ site.title }}</h1>
+
+    {% if site.description %}
         <p>{{ site.description }}</p>
-    </header>
+    {% endif %}
 
-    <main>
-        <h2>Recent Posts</h2>
-        <ul>
+</section>
+
+
+<!-- 바로가기 -->
+<section>
+
+    <h2>바로가기</h2>
+
+    <div class="shortcut-grid">
+
+        <a
+            href="https://www.naver.com/"
+            class="shortcut-card"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            <span class="shortcut-icon">🟢</span>
+            네이버
+        </a>
+
+
+        <a
+            href="https://www.youtube.com/"
+            class="shortcut-card"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            <span class="shortcut-icon">▶️</span>
+            유튜브
+        </a>
+
+
+        <a
+            href="https://www.google.com/"
+            class="shortcut-card"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            <span class="shortcut-icon">🔎</span>
+            구글
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- 최근 게시글 -->
+<section>
+
+    <h2>최근 게시글</h2>
+
+    {% if site.posts.size > 0 %}
+
+        <ul class="post-list">
+
             {% for post in site.posts %}
-            <li>
-                <span class="date">{{ post.date | date: "%Y-%m-%d" }}</span>
-                <a href="{{ post.url }}">{{ post.title }}</a>
-            </li>
+
+                <li>
+
+                    <span class="post-date">
+                        {{ post.date | date: "%Y-%m-%d" }}
+                    </span>
+
+                    <a href="{{ post.url | relative_url }}">
+                        {{ post.title }}
+                    </a>
+
+                </li>
+
             {% endfor %}
+
         </ul>
-    </main>
 
-    <footer>
-        <p>&copy; {{ site.time | date: "%Y" }} Built with GitHub Pages</p>
-    </footer>
+    {% else %}
 
-    <script>
-        const toggleBtn = document.getElementById('theme-toggle');
-        const htmlElement = document.documentElement;
-        
-        // 1. 테마 불러오기 (기존 설정 확인)
-        const savedTheme = localStorage.getItem('theme') || 
-                          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        
-        htmlElement.setAttribute('data-theme', savedTheme);
-        updateButton(savedTheme);
+        <p>아직 게시글이 없습니다.</p>
 
-        // 2. 버튼 클릭 이벤트
-        toggleBtn.addEventListener('click', () => {
-            const currentTheme = htmlElement.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            htmlElement.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateButton(newTheme);
-        });
+    {% endif %}
 
-        function updateButton(theme) {
-            toggleBtn.textContent = theme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
-        }
-    </script>
-</body>
-</html>
+</section>
