@@ -3,127 +3,194 @@ layout: default
 ---
 
 <header>
-    <button id="theme-toggle" type="button">🌙 다크모드</button>
+
+    <button id="theme-toggle" type="button">
+        🌙 다크모드
+    </button>
 
     <h1>
-        <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
+        <a href="{{ '/' | relative_url }}">
+            {{ site.title }}
+        </a>
     </h1>
 
-    {% if site.description %}
-    <p>{{ site.description }}</p>
-    {% endif %}
+    <p>
+        개발과 자기계발을 기록하는 공간
+    </p>
+
 </header>
+
 
 <main>
 
-    <h2>바로가기</h2>
+    <!-- 바로가기 -->
 
-    <div class="shortcut-list">
+    <section>
 
-        <a
-            class="shortcut"
-            href="https://www.naver.com/"
-            target="_blank"
-            rel="noopener noreferrer">
-            🟢 네이버
-        </a>
+        <h2>바로가기</h2>
 
-        <a
-            class="shortcut"
-            href="https://www.youtube.com/"
-            target="_blank"
-            rel="noopener noreferrer">
-            ▶️ 유튜브
-        </a>
+        <div class="shortcut-list">
 
-        <a
-            class="shortcut"
-            href="https://www.google.com/"
-            target="_blank"
-            rel="noopener noreferrer">
-            🔎 구글
-        </a>
-
-    </div>
-
-
-    <h2>최근 게시글</h2>
-
-    {% if site.posts.size > 0 %}
-
-    <ul>
-
-        {% for post in site.posts %}
-
-        <li>
-            <span class="date">
-                {{ post.date | date: "%Y-%m-%d" }}
-            </span>
-
-            <a href="{{ post.url | relative_url }}">
-                {{ post.title }}
+            <a
+                class="shortcut"
+                href="https://www.naver.com/"
+                target="_blank"
+                rel="noopener noreferrer">
+                🟢 네이버
             </a>
-        </li>
 
-        {% endfor %}
+            <a
+                class="shortcut"
+                href="https://www.youtube.com/"
+                target="_blank"
+                rel="noopener noreferrer">
+                ▶️ 유튜브
+            </a>
 
-    </ul>
+            <a
+                class="shortcut"
+                href="https://www.google.com/"
+                target="_blank"
+                rel="noopener noreferrer">
+                🔎 구글
+            </a>
 
-    {% else %}
+        </div>
 
-    <p>아직 게시글이 없습니다.</p>
+    </section>
 
-    {% endif %}
+
+    <!-- 최근 게시글 -->
+
+    <section>
+
+        <h2>최근 게시글</h2>
+
+        {% if site.posts.size > 0 %}
+
+        <ul>
+
+            {% for post in site.posts %}
+
+            <li>
+
+                <span class="date">
+                    {{ post.date | date: "%Y-%m-%d" }}
+                </span>
+
+                <a href="{{ post.url | relative_url }}">
+                    {{ post.title }}
+                </a>
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+        {% else %}
+
+        <p>
+            아직 게시글이 없습니다.
+        </p>
+
+        {% endif %}
+
+    </section>
 
 </main>
 
+
 <footer>
+
     <p>
-        &copy; {{ site.time | date: "%Y" }} {{ site.title }}
+        © {{ site.time | date: "%Y" }} {{ site.title }}
     </p>
+
 </footer>
 
+
 <script>
+
 (function () {
 
     var button = document.getElementById("theme-toggle");
+
     var html = document.documentElement;
+
 
     var savedTheme = localStorage.getItem("theme");
 
+
     if (savedTheme) {
-        html.setAttribute("data-theme", savedTheme);
+
+        html.setAttribute(
+            "data-theme",
+            savedTheme
+        );
+
     } else {
-        html.setAttribute("data-theme", "light");
+
+        html.setAttribute(
+            "data-theme",
+            "light"
+        );
+
     }
+
 
     updateButton();
 
+
     button.addEventListener("click", function () {
 
-        var currentTheme = html.getAttribute("data-theme");
+        var currentTheme =
+            html.getAttribute("data-theme");
 
-        var newTheme = currentTheme === "dark"
-            ? "light"
-            : "dark";
 
-        html.setAttribute("data-theme", newTheme);
+        var newTheme =
+            currentTheme === "dark"
+                ? "light"
+                : "dark";
 
-        localStorage.setItem("theme", newTheme);
+
+        html.setAttribute(
+            "data-theme",
+            newTheme
+        );
+
+
+        localStorage.setItem(
+            "theme",
+            newTheme
+        );
+
 
         updateButton();
+
     });
+
 
     function updateButton() {
 
-        var theme = html.getAttribute("data-theme");
+        var theme =
+            html.getAttribute("data-theme");
+
 
         if (theme === "dark") {
-            button.textContent = "☀️ 라이트모드";
+
+            button.textContent =
+                "☀️ 라이트모드";
+
         } else {
-            button.textContent = "🌙 다크모드";
+
+            button.textContent =
+                "🌙 다크모드";
+
         }
+
     }
 
 })();
+
 </script>
