@@ -1,6 +1,6 @@
 # _config.yml 내용
-title: "자기개발자의 블로그"
-description: "코드로 문제를 해결하자"
+title: "자기개발자"
+description: "코드로 문제를 해결하자!"
 baseurl: ""
 url: ""
 theme: minima
